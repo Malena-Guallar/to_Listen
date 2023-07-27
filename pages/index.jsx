@@ -10,8 +10,10 @@ const yeseva = Yeseva_One({
 
 
 export default function Home() {
+
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
+
   const addToList = (e) => {
     e.preventDefault();
     if (!input){
@@ -21,14 +23,17 @@ export default function Home() {
       setInput("");
     };
   };
+
   const deleteFromList = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
+
   const markChecked = (id) => {
     setTodos(
       todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done} : todo))
     );
   };
+  
   return (
     <main className={`${yeseva.className} text-orange-400 font-yeseva`}>
       <h1>To Listen App</h1>
