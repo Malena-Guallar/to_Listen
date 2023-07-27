@@ -30,7 +30,7 @@ export default function Home() {
     );
   };
   return (
-    <main className={`${yeseva.variable} text-orange-400 font-yeseva`}>
+    <main className={`${yeseva.className} text-orange-400 font-yeseva`}>
       <h1>To Listen App</h1>
       <form onSubmit={addToList}>
         <input 
