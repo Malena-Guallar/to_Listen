@@ -33,9 +33,9 @@ export default function Home() {
       todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done} : todo))
     );
   };
-  
+
   return (
-    <main className={`${yeseva.className} text-orange-400 font-yeseva`}>
+    <main className={`${yeseva.className} text-orange-400`}>
       <h1>To Listen App</h1>
       <form onSubmit={addToList}>
         <input 
