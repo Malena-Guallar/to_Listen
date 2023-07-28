@@ -60,19 +60,20 @@ export default function Home() {
         </form>
       </div>
       <br></br>
-      <div id="list_container" class="flex flex-row ml-5">
-        <p id="coral_square" class="bg-coral p-5 text-coral" >a</p>
+      <div id="list_container" class="flex ml-5 justify-start ">
         <ul id="list_of_items"
-            class="flex items-center ml-5">
-            {todos.map((todo) => (
-              <li key={todo.id} 
-                  class={`${todo.done ? "text-green-300" : ""}`}>
-              <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
-              <button onClick={() => deleteFromList(todo.id)}
-                      class="pl-40 text-coral font-semibold">
-                      delete</button>
-              </li>
-            ))}
+            class="flex flex-col w-full">
+              {todos.map((todo) => (
+                    <div key={todo.id} class={`${todo.done ? "text-blue" : ""} flex  items-center`}>
+                      <p id="coral_square" class="bg-coral p-5 text-coral max-w-fit">a</p>
+                      <p class="flex flex-row pl-5 w-full justify-between">
+                        <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
+                        <button onClick={() => deleteFromList(todo.id)} class=" text-coral font-semibold flex pr-8">
+                          delete
+                        </button>
+                      </p>
+                    </div>
+                  ))}
         </ul>
       </div>
     </main>
