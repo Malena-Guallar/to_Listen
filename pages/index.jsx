@@ -35,9 +35,9 @@ export default function Home() {
   };
 
   return (
-    <main className={`${yeseva.className} text-orange-400`}>
-      <h1>To Listen App</h1>
-      <form onSubmit={addToList}>
+    <main >
+      <h1 className={`${yeseva.className} text-orange-400`}> To Listen App</h1>
+      <form onSubmit={addToList} >
         <input 
             type="text"
             value={input}
