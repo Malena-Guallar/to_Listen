@@ -44,25 +44,37 @@ export default function Home() {
   };
 
   return (
-    <main class="w-screen h-screen bg-cream">
-      <h1 class={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
-      <form onSubmit={addToList} class={`${quicksand.className} text-yellow p-5 bg-blue m-5`}>
+    <main id="app_container" class={`${quicksand.className} w-screen h-screen bg-cream`}>
+      <h1 id="header" class={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
+      <div id="form_container" class="flex flex-row ml-5">
+        <p id="blue_square" class="bg-blue p-5 text-blue" >a</p>
+        <form id="form" onSubmit={addToList} class="flex items-center ml-5">
         <input 
-            class="bg-transparent"
+            id="input"
+            class="flex-row bg-transparent content-center py-4 italic font-light"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Add something to listen" />
-        <button type="submit" class="font-medium">Add</button>
-      </form>
-      <ul>
-        {todos.map((todo) => (
-            <li key={todo.id} class={todo.done ? "text-green-300" : ""}>
-            <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
-            <button onClick={() => deleteFromList(todo.id)}>. . .delete</button>
-            </li>
-        ))}
-      </ul>
+        <button type="submit" class="font-semibold pl-3 text-blue">add</button>
+        </form>
+      </div>
+      <br></br>
+      <div id="list_container" class="flex flex-row ml-5">
+        <p id="coral_square" class="bg-coral p-5 text-coral" >a</p>
+        <ul id="list_of_items"
+            class="flex items-center ml-5">
+            {todos.map((todo) => (
+              <li key={todo.id} 
+                  class={`${todo.done ? "text-green-300" : ""}`}>
+              <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
+              <button onClick={() => deleteFromList(todo.id)}
+                      class="pl-40 text-coral font-semibold">
+                      delete</button>
+              </li>
+            ))}
+        </ul>
+      </div>
     </main>
   )
 };
