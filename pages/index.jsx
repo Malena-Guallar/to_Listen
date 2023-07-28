@@ -1,11 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Yeseva_One } from "@next/font/google";
+import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
   weight: ['400'],
-  variable: "--font-yeseva"
+});
+
+const italiana = Italiana({
+  subsets: ["latin"],
+  weight: ['400']
+});
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700']
 })
 
 
@@ -35,15 +44,16 @@ export default function Home() {
   };
 
   return (
-    <main >
-      <h1 className={`${yeseva.className} text-orange-400`}> To Listen App</h1>
-      <form onSubmit={addToList} >
+    <main class="w-screen h-screen bg-cream">
+      <h1 class={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
+      <form onSubmit={addToList} class={`${quicksand.className} text-yellow p-5 bg-blue m-5`}>
         <input 
+            class="bg-transparent"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Add something to listen" />
-        <button type="submit">Add</button>
+        <button type="submit" class="font-medium">Add</button>
       </form>
       <ul>
         {todos.map((todo) => (
