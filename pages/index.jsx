@@ -17,8 +17,32 @@ const quicksand = Quicksand({
   weight: ['300', '400', '500', '600', '700']
 })
 
+import clientPromise from '../lib/mongodb'
 
-export default function Home() {
+export const getServerSideProps = async () => {
+  try {
+    await clientPromise
+    // `await clientPromise` will use the default database passed in the MONGODB_URI
+    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
+    //
+    // `const client = await clientPromise`
+    // `const db = client.db("myDatabase")`
+    //
+    // Then you can execute queries against your database like so:
+    // db.find({}) or any of the MongoDB Node Driver commands
+    return {
+      props: { isConnected: true },
+    }
+  }
+  catch (e) {
+    console.error(e)
+    return {
+      props: { isConnected: false },
+    }
+  }
+}
+
+export default function Home({ isConnected }) {
 
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
@@ -45,6 +69,11 @@ export default function Home() {
 
   return (
     <main id="app_container" class={`${quicksand.className} w-screen h-screen bg-cream`}>
+      {isConnected ? (
+        <h1>You are connected to MongoDB</h1>
+      ): (
+        <h1>Connection to MongoDB failed ...</h1>
+      )}
       <h1 id="header" class={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
       <div id="form_container" class="flex flex-row ml-5">
         <p id="blue_square" class="bg-blue p-5 text-blue" >a</p>
