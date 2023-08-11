@@ -30,6 +30,7 @@ export const getServerSideProps = async () => {
     //
     // Then you can execute queries against your database like so:
     // db.find({}) or any of the MongoDB Node Driver commands
+    console.log("Connected to MongoDB !");
     return {
       props: { isConnected: true },
     }
@@ -42,7 +43,7 @@ export const getServerSideProps = async () => {
   }
 }
 
-export default function Home({ isConnected }) {
+export default function Home() {
 
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
@@ -69,11 +70,6 @@ export default function Home({ isConnected }) {
 
   return (
     <main id="app_container" class={`${quicksand.className} w-screen h-screen bg-cream`}>
-      {isConnected ? (
-        <h1>You are connected to MongoDB</h1>
-      ): (
-        <h1>Connection to MongoDB failed ...</h1>
-      )}
       <h1 id="header" class={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
       <div id="form_container" class="flex flex-row ml-5">
         <p id="blue_square" class="bg-blue p-5 text-blue" >a</p>
