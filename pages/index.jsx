@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
 import AddToList from "./Components/AddToList";
 import ItemFromList from "./Components/ItemFromList";
+import ItemFromCheckedList from "./Components/ItemFromCheckedList"
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
@@ -45,19 +46,27 @@ export const getServerSideProps = async () => {
   }
 }
 
+// Pb à régler -> les items marqués "checked" s'affichent toujours dans la première liste.
+
 export default function Home() {
 
   const [todos, setTodos] = useState([]);
-
+  const [markedTodos, setMarkedTodos] = useState([]);
 
   const deleteFromList = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
+    setMarkedTodos(markedTodos.filter((todo) => todo.id !== id));
   };
 
   const markChecked = (id) => {
-    setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done} : todo))
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, done: true } : todo
     );
+
+    const checkedTodo = updatedTodos.find((todo) => todo.id === id);
+
+    setTodos(updatedTodos);
+    setMarkedTodos([...markedTodos, checkedTodo]);
   };
 
   return (
@@ -66,18 +75,28 @@ export default function Home() {
         <h1 id="header" className={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
         <AddToList todos={todos} setTodos={setTodos}/>
         <br></br>
-        <div id="list_container" className="flex ml-5 justify-start ">
-        <ul id="list_of_items"
-        class="flex flex-col w-full">
-          {todos.map((todo) => (
-              <ItemFromList 
+        <div id="list_container" className="flex ml-5 justify-start">
+            <ul id="list_of_items"
+            className="flex flex-col w-full">
+              {todos.map((todo) => (
+                  <ItemFromList 
+                    key={todo.id}
+                    todo={todo}
+                    markChecked={markChecked}
+                  />
+                  ))}
+            </ul>
+        </div>
+        <div>
+          <ul id="list_of_marked_items"
+          className="flex flex-col w-full text-black">
+            {markedTodos.map((todo) => (
+              <ItemFromCheckedList 
                 key={todo.id}
                 todo={todo}
-                markChecked={markChecked}
-                deleteFromList={deleteFromList}
-              />
-              ))}
-    </ul>
+                deleteFromList={deleteFromList}/>
+            ))}
+          </ul>
         </div>
       </main>
     </>
