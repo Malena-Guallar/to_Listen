@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
-import  AddToList  from "./Components/AddToList";
+import AddToList from "./Components/AddToList";
+import ItemFromList from "./Components/ItemFromList";
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
@@ -66,20 +67,17 @@ export default function Home() {
         <AddToList todos={todos} setTodos={setTodos}/>
         <br></br>
         <div id="list_container" className="flex ml-5 justify-start ">
-          <ul id="list_of_items"
-              class="flex flex-col w-full">
-                {todos.map((todo) => (
-                      <div key={todo.id} className={`${todo.done ? "text-blue" : ""} flex  items-center`}>
-                        <p id="coral_square" className="bg-coral p-5 text-coral max-w-fit">a</p>
-                        <p className="flex flex-row pl-5 w-full justify-between">
-                          <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
-                          <button onClick={() => deleteFromList(todo.id)} className=" text-coral font-semibold flex pr-8">
-                            delete
-                          </button>
-                        </p>
-                      </div>
-                    ))}
-          </ul>
+        <ul id="list_of_items"
+        class="flex flex-col w-full">
+          {todos.map((todo) => (
+              <ItemFromList 
+                key={todo.id}
+                todo={todo}
+                markChecked={markChecked}
+                deleteFromList={deleteFromList}
+              />
+              ))}
+    </ul>
         </div>
       </main>
     </>
