@@ -1,4 +1,19 @@
-const AddToList = () => {
+import { React, useState } from "react";
+
+function AddToList({ todos, setTodos }) {
+
+    const [input, setInput] = useState("");
+
+    const addToList = (e) => {
+        e.preventDefault();
+        if (!input){
+          return;
+        } else {
+          setTodos([...todos, { id: Date.now(), text: input, done: false }]);
+          setInput("");
+        };
+      };
+
 
     return (
         <div id="form_container" className="flex flex-row ml-5">
@@ -15,6 +30,7 @@ const AddToList = () => {
         </form>
         </div>
     )
-}
+};
+
 export default AddToList;
-module.export = AddToList;
+

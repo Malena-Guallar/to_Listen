@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
-import { AddToList } from "./Components/AddToList";
+import  AddToList  from "./Components/AddToList";
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
@@ -47,17 +47,7 @@ export const getServerSideProps = async () => {
 export default function Home() {
 
   const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState("");
 
-  const addToList = (e) => {
-    e.preventDefault();
-    if (!input){
-      return;
-    } else {
-      setTodos([...todos, { id: Date.now(), text: input, done: false }]);
-      setInput("");
-    };
-  };
 
   const deleteFromList = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
@@ -70,26 +60,28 @@ export default function Home() {
   };
 
   return (
-    <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
-      <h1 id="header" className={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
-      <AddToList />
-      <br></br>
-      <div id="list_container" className="flex ml-5 justify-start ">
-        <ul id="list_of_items"
-            class="flex flex-col w-full">
-              {todos.map((todo) => (
-                    <div key={todo.id} className={`${todo.done ? "text-blue" : ""} flex  items-center`}>
-                      <p id="coral_square" className="bg-coral p-5 text-coral max-w-fit">a</p>
-                      <p className="flex flex-row pl-5 w-full justify-between">
-                        <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
-                        <button onClick={() => deleteFromList(todo.id)} className=" text-coral font-semibold flex pr-8">
-                          delete
-                        </button>
-                      </p>
-                    </div>
-                  ))}
-        </ul>
-      </div>
-    </main>
+    <>
+      <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
+        <h1 id="header" className={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
+        <AddToList todos={todos} setTodos={setTodos}/>
+        <br></br>
+        <div id="list_container" className="flex ml-5 justify-start ">
+          <ul id="list_of_items"
+              class="flex flex-col w-full">
+                {todos.map((todo) => (
+                      <div key={todo.id} className={`${todo.done ? "text-blue" : ""} flex  items-center`}>
+                        <p id="coral_square" className="bg-coral p-5 text-coral max-w-fit">a</p>
+                        <p className="flex flex-row pl-5 w-full justify-between">
+                          <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
+                          <button onClick={() => deleteFromList(todo.id)} className=" text-coral font-semibold flex pr-8">
+                            delete
+                          </button>
+                        </p>
+                      </div>
+                    ))}
+          </ul>
+        </div>
+      </main>
+    </>
   )
 };
