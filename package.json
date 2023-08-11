@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@next/font": "^13.4.12",
+    "axios": "^1.4.0",
     "mongodb": "^4.8.1",
     "next": "latest",
     "react": "^18.2.0",
