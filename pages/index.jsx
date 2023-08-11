@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
+import { AddToList } from "./Components/AddToList";
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
@@ -69,31 +70,19 @@ export default function Home() {
   };
 
   return (
-    <main id="app_container" class={`${quicksand.className} w-screen h-screen bg-cream`}>
-      <h1 id="header" class={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
-      <div id="form_container" class="flex flex-row ml-5">
-        <p id="blue_square" class="bg-blue p-5 text-blue" >a</p>
-        <form id="form" onSubmit={addToList} class="flex items-center ml-5">
-        <input 
-            id="input"
-            class="flex-row bg-transparent content-center py-4 italic font-light"
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Add something to listen" />
-        <button type="submit" class="font-semibold pl-3 text-blue">add</button>
-        </form>
-      </div>
+    <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
+      <h1 id="header" className={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
+      <AddToList />
       <br></br>
-      <div id="list_container" class="flex ml-5 justify-start ">
+      <div id="list_container" className="flex ml-5 justify-start ">
         <ul id="list_of_items"
             class="flex flex-col w-full">
               {todos.map((todo) => (
-                    <div key={todo.id} class={`${todo.done ? "text-blue" : ""} flex  items-center`}>
-                      <p id="coral_square" class="bg-coral p-5 text-coral max-w-fit">a</p>
-                      <p class="flex flex-row pl-5 w-full justify-between">
+                    <div key={todo.id} className={`${todo.done ? "text-blue" : ""} flex  items-center`}>
+                      <p id="coral_square" className="bg-coral p-5 text-coral max-w-fit">a</p>
+                      <p className="flex flex-row pl-5 w-full justify-between">
                         <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
-                        <button onClick={() => deleteFromList(todo.id)} class=" text-coral font-semibold flex pr-8">
+                        <button onClick={() => deleteFromList(todo.id)} className=" text-coral font-semibold flex pr-8">
                           delete
                         </button>
                       </p>
