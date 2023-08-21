@@ -1,9 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import React from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
 import AddToList from "./Components/AddToList";
-import ItemFromList from "./Components/ItemFromList";
-import ItemFromCheckedList from "./Components/ItemFromCheckedList"
+import TodoItem from "./Components/TodoItem";
+import ItemFromCheckedList from "./Components/CheckedItem"
+import { useSelector, useDispatch } from "react-redux";
+import { markChecked, deleteFromList } from "../Redux/List.slice";
+
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
@@ -21,6 +24,7 @@ const quicksand = Quicksand({
 })
 
 import clientPromise from '../lib/mongodb'
+import CheckedItem from "./Components/CheckedItem";
 
 export const getServerSideProps = async () => {
   try {
@@ -50,36 +54,21 @@ export const getServerSideProps = async () => {
 
 export default function Home() {
 
-  const [todos, setTodos] = useState([]);
-  const [markedTodos, setMarkedTodos] = useState([]);
+  const todos = useSelector((state) => state.list.todos);
+  const markedTodos = useSelector((state) => state.list.markedTodos);
 
-  const deleteFromList = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-    setMarkedTodos(markedTodos.filter((todo) => todo.id !== id));
-  };
-
-  const markChecked = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, done: true } : todo
-    );
-
-    const checkedTodo = updatedTodos.find((todo) => todo.id === id);
-
-    setTodos(updatedTodos);
-    setMarkedTodos([...markedTodos, checkedTodo]);
-  };
 
   return (
     <>
       <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
         <h1 id="header" className={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
-        <AddToList todos={todos} setTodos={setTodos}/>
+        <AddToList />
         <br></br>
         <div id="list_container" className="flex ml-5 justify-start">
             <ul id="list_of_items"
             className="flex flex-col w-full">
               {todos.map((todo) => (
-                  <ItemFromList 
+                  <TodoItem 
                     key={todo.id}
                     todo={todo}
                     markChecked={markChecked}
@@ -91,7 +80,7 @@ export default function Home() {
           <ul id="list_of_marked_items"
           className="flex flex-col w-full text-black">
             {markedTodos.map((todo) => (
-              <ItemFromCheckedList 
+              <CheckedItem 
                 key={todo.id}
                 todo={todo}
                 deleteFromList={deleteFromList}/>

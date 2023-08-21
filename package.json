@@ -8,10 +8,13 @@
   },
   "dependencies": {
     "@next/font": "^13.4.12",
+    "@reduxjs/toolkit": "^1.9.5",
     "mongodb": "^4.8.1",
     "next": "latest",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
