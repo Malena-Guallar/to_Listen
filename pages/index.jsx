@@ -18,11 +18,11 @@ const quicksand = Quicksand({
   weight: ['300', '400', '500', '600', '700']
 })
 
-import clientPromise from '../lib/mongodb'
+import dbConnect from '../lib/dbConnect'
 
 export const getServerSideProps = async () => {
   try {
-    await clientPromise
+    await dbConnect();
     // `await clientPromise` will use the default database passed in the MONGODB_URI
     // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
     //
@@ -31,7 +31,7 @@ export const getServerSideProps = async () => {
     //
     // Then you can execute queries against your database like so:
     // db.find({}) or any of the MongoDB Node Driver commands
-    console.log("Connected to MongoDB !");
+    console.log("Connected to MongoDB/mongoose !");
     return {
       props: { isConnected: true },
     }

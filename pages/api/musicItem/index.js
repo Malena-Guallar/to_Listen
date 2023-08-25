@@ -1,11 +1,11 @@
 import MusicItem from "../../../models/MusicItem";
-import clientPromise from "../../../lib/mongodb";
+import dbConnect from "../../../lib/dbConnect";
 
 export default async (req,res) => {
   const { method } = req;
 
   // Connect to database
-  await clientPromise;
+  await dbConnect();
 
   // Create music item
   if (method === "POST") {

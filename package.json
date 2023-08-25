@@ -9,6 +9,7 @@
   "dependencies": {
     "@next/font": "^13.4.12",
     "mongodb": "^4.8.1",
+    "mongoose": "^7.4.4",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

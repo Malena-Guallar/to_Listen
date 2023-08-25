@@ -3,9 +3,21 @@ import { React, useState } from "react";
 function AddToList() {
     const [input, setInput] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Add button clicked");
+        const url = "http://localhost:3000/api/musicItem";
+        await fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                text: input,
+                done: false
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then((response) => response.json())
+        .then((json) => console.log(json));
     }
 
     return (

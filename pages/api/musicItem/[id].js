@@ -1,12 +1,12 @@
 import MusicItem from "../../../models/MusicItem";
-import clientPromise from "../../../lib/mongodb";
+import dbConnect from "../../../lib/dbConnect";
 
 export default async (req,res) => {
   const { method } = req;
   const { id } = req.query;
 
   // Connect to database
-  await clientPromise;
+  await dbConnect();
 
   // Update music item by id
   if (method === "PUT") {
