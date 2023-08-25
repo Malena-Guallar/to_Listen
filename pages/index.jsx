@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
-import { AddToList } from "./Components/AddToList";
+import AddToList from "./Components/AddToList";
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
@@ -76,7 +76,7 @@ export default function Home() {
       <br></br>
       <div id="list_container" className="flex ml-5 justify-start ">
         <ul id="list_of_items"
-            class="flex flex-col w-full">
+            className="flex flex-col w-full">
               {todos.map((todo) => (
                     <div key={todo.id} className={`${todo.done ? "text-blue" : ""} flex  items-center`}>
                       <p id="coral_square" className="bg-coral p-5 text-coral max-w-fit">a</p>
