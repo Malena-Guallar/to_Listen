@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
 import AddToList from "./Components/AddToList";
 import TodoItem from "./Components/TodoItem";
@@ -56,7 +56,16 @@ export default function Home() {
 
   const todos = useSelector((state) => state.list.todos);
   const markedTodos = useSelector((state) => state.list.markedTodos);
+  // const [todos, setTodos] = useState("")
 
+  const getFromDatabase = async () => {
+    const url = "http://localhost:3000/api/musicItem";
+    const response = await fetch(url, {
+    method: "GET"})
+    .then((response) => response.json())
+    console.log(response);
+  };
+  getFromDatabase();
 
   return (
     <>
