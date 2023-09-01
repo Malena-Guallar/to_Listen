@@ -1,24 +1,23 @@
 import { React, useState } from "react";
+import { useDispatch, useStore } from "react-redux";
+import { addTolist } from "../../Redux/List.slice";
 
 function AddToList() {
-    const [input, setInput] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("Add button clicked");
-        const url = "http://localhost:3000/api/musicItem";
-        await fetch(url, {
-            method: "POST",
-            body: JSON.stringify({
-                text: input,
-                done: false
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        }).then((response) => response.json())
-        .then((json) => console.log(json));
-    }
+    const [input, setInput] = useState("");
+    const dispatch = useDispatch();
+    const store = useStore();
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (!input) {
+          return;
+      }
+      dispatch(addTolist({ id: Date.now(), text: input, done: false })); // Dispatch the action
+      setInput("");
+      console.log(store.getState())
+  };
+
 
     return (
         <div id="form_container" className="flex flex-row ml-5">
@@ -35,6 +34,7 @@ function AddToList() {
         </form>
         </div>
     )
-}
+};
+
 export default AddToList;
-// module.export = AddToList;
+

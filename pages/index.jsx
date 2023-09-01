@@ -1,7 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import React from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
 import AddToList from "./Components/AddToList";
+import TodoItem from "./Components/TodoItem";
+import ItemFromCheckedList from "./Components/CheckedItem"
+import { useSelector, useDispatch } from "react-redux";
+import { markChecked, deleteFromList } from "../Redux/List.slice";
+
 
 const yeseva = Yeseva_One({
   subsets: ['latin'],
@@ -19,6 +24,7 @@ const quicksand = Quicksand({
 })
 
 import dbConnect from '../lib/dbConnect'
+import CheckedItem from "./Components/CheckedItem";
 
 export const getServerSideProps = async () => {
   try {
@@ -44,52 +50,44 @@ export const getServerSideProps = async () => {
   }
 }
 
+// Pb à régler -> les items marqués "checked" s'affichent toujours dans la première liste.
+
 export default function Home() {
 
-  const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState("");
+  const todos = useSelector((state) => state.list.todos);
+  const markedTodos = useSelector((state) => state.list.markedTodos);
 
-  const addToList = (e) => {
-    e.preventDefault();
-    if (!input){
-      return;
-    } else {
-      setTodos([...todos, { id: Date.now(), text: input, done: false }]);
-      setInput("");
-    };
-  };
-
-  const deleteFromList = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const markChecked = (id) => {
-    setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done} : todo))
-    );
-  };
 
   return (
-    <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
-      <h1 id="header" className={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
-      <AddToList />
-      <br></br>
-      <div id="list_container" className="flex ml-5 justify-start ">
-        <ul id="list_of_items"
+    <>
+      <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
+        <h1 id="header" className={`${italiana.className} font-family-italiana flex text-3xl p-10 place-content-center`}> to Listen .</h1>
+        <AddToList />
+        <br></br>
+        <div id="list_container" className="flex ml-5 justify-start">
+            <ul id="list_of_items"
             className="flex flex-col w-full">
               {todos.map((todo) => (
-                    <div key={todo.id} className={`${todo.done ? "text-blue" : ""} flex  items-center`}>
-                      <p id="coral_square" className="bg-coral p-5 text-coral max-w-fit">a</p>
-                      <p className="flex flex-row pl-5 w-full justify-between">
-                        <span onClick={() => markChecked(todo.id)}>{todo.text}</span>
-                        <button onClick={() => deleteFromList(todo.id)} className=" text-coral font-semibold flex pr-8">
-                          delete
-                        </button>
-                      </p>
-                    </div>
+                  <TodoItem 
+                    key={todo.id}
+                    todo={todo}
+                    markChecked={markChecked}
+                  />
                   ))}
-        </ul>
-      </div>
-    </main>
+            </ul>
+        </div>
+        <div>
+          <ul id="list_of_marked_items"
+          className="flex flex-col w-full text-black">
+            {markedTodos.map((todo) => (
+              <CheckedItem 
+                key={todo.id}
+                todo={todo}
+                deleteFromList={deleteFromList}/>
+            ))}
+          </ul>
+        </div>
+      </main>
+    </>
   )
 };
