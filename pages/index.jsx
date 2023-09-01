@@ -61,7 +61,7 @@ export default function Home() {
   return (
     <>
       <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
-        <h1 id="header" className={`${italiana.className} flex text-3xl p-10 place-content-center`}> to Listen .</h1>
+        <h1 id="header" className={`${italiana.className} font-family-italiana flex text-3xl p-10 place-content-center`}> to Listen .</h1>
         <AddToList />
         <br></br>
         <div id="list_container" className="flex ml-5 justify-start">

@@ -18,7 +18,10 @@ export const listSlice = createSlice({
             if (todoToMark) {
                 todoToMark.done = true;
                 state.markedTodos.push(todoToMark);
+                state.todos.splice()
             }
+            // maintenant il faut enlever de la liste todos l'item qui est passé dans marked.
+            // Pour le moment l'item qui a été marqué comme checked reste affiché dans la todolist. 
         },
         deleteFromList: (state, action) => {
             const todoId = action.payload;
