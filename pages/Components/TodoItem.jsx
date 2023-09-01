@@ -16,10 +16,10 @@ function TodoItem({ todo }) {
     return (
         <div key={todo.id} className="flex items-center">
         <p id="coral_square" className="bg-coral p-5 text-coral max-w-fit">a</p>
-        <p className="flex flex-row pl-5 w-full justify-between">
+        <div className="flex flex-row pl-5 w-full justify-between">
           <p>{todo.text}</p>
           <button onClick={handleMarkChecked}>mark checked</button>
-        </p>
+        </div>
       </div>
     )
 }
