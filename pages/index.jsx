@@ -1,110 +1,65 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
+import React, { useEffect } from "react";
+import { Italiana, Quicksand } from "@next/font/google";
 import AddToList from "./Components/AddToList";
+import CheckedItem from "./Components/CheckedItem";
 import TodoItem from "./Components/TodoItem";
-import ItemFromCheckedList from "./Components/CheckedItem"
-import { useSelector, useDispatch } from "react-redux";
-import { markChecked, deleteFromList } from "../Redux/List.slice";
+import { useSelector } from "react-redux";
 import { store } from "../Redux/store";
 import { fetchTodos } from "../Redux/List.slice";
 
-
-const yeseva = Yeseva_One({
-  subsets: ['latin'],
-  weight: ['400'],
-});
-
 const italiana = Italiana({
   subsets: ["latin"],
-  weight: ['400']
+  weight: ["400"],
 });
 
 const quicksand = Quicksand({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700']
-})
-
-import dbConnect from '../lib/dbConnect'
-import CheckedItem from "./Components/CheckedItem";
-
-export const getServerSideProps = async () => {
-  try {
-    await dbConnect();
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-    console.log("Connected to MongoDB/mongoose !");
-    return {
-      props: { isConnected: true },
-    }
-  }
-  catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 // Pb à régler -> les items marqués "checked" s'affichent toujours dans la première liste.
 
-
 export default function Home() {
-  
   useEffect(() => {
-    console.log('je passe par le useEffect de Home')
     store.dispatch(fetchTodos);
   }, []);
 
   const todos = useSelector((state) => state.list.todos);
   const markedTodos = useSelector((state) => state.list.markedTodos);
-  // const [todos, setTodos] = useState("")
-
-  const getFromDatabase = async () => {
-    const url = "http://localhost:3000/api/musicItem";
-    const response = await fetch(url, {
-    method: "GET"})
-    .then((response) => response.json())
-    console.log('response from db ', response);
-  };
-  getFromDatabase();
 
   return (
     <>
-      <main id="app_container" className={`${quicksand.className} w-screen h-screen bg-cream`}>
-        <h1 id="header" className={`${italiana.className} font-family-italiana flex text-3xl p-10 place-content-center`}> to Listen .</h1>
+      <main
+        id="app_container"
+        className={`${quicksand.className} w-screen h-screen bg-cream`}
+      >
+        <h1
+          id="header"
+          className={`${italiana.className} font-family-italiana flex text-3xl p-10 place-content-center`}
+        >
+          to Listen .
+        </h1>
         <AddToList />
         <br></br>
         <div id="list_container" className="flex ml-5 justify-start">
-            <ul id="list_of_items"
-            className="flex flex-col w-full">
-              {todos.map((todo) => (
-                  <TodoItem 
-                    key={todo.id}
-                    todo={todo}
-                    markChecked={markChecked}
-                  />
-                  ))}
-            </ul>
+          <ul id="list_of_items" className="flex flex-col w-full">
+            {todos.map((todo) => (
+              <TodoItem key={todo.id} todo={todo} />
+            ))}
+          </ul>
         </div>
         <div>
-          <ul id="list_of_marked_items"
-          className="flex flex-col w-full text-black">
+          <ul
+            id="list_of_marked_items"
+            className="flex flex-col w-full text-black"
+          >
             {markedTodos.map((todo) => (
-              <CheckedItem 
-                key={todo.id}
-                todo={todo}
-                deleteFromList={deleteFromList}/>
+              <CheckedItem key={todo.id} todo={todo} />
             ))}
           </ul>
         </div>
       </main>
     </>
-  )
-};
+  );
+}

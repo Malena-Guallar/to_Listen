@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { addTolist } from "../../Redux/List.slice";
 
 function AddToList() {
-
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
 
@@ -13,7 +12,7 @@ function AddToList() {
       return;
     }
     const itemId = await addToDatabase(input, false);
-    dispatch(addTolist({ id: itemId, text: input, done: false })); // Dispatch the action
+    dispatch(addTolist({ id: itemId, text: input, done: false }));
     setInput("");
   };
 
@@ -22,7 +21,7 @@ function AddToList() {
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({
-        text: input, // le texte à mettre
+        text: input,
         done: false,
       }),
       headers: {

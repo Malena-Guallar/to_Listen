@@ -6,5 +6,3 @@ export const store = configureStore({
     list: listReducer,
   },
 });
-
-console.log("store ", store.getState());

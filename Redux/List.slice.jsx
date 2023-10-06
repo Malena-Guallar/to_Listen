@@ -11,7 +11,6 @@ export const listSlice = createSlice({
   reducers: {
     loadTodos: (state, action) => {
       state.todos = action.payload;
-      console.log("action  ", action);
     },
     addTolist: (state, action) => {
       state.todos.push(action.payload);
@@ -41,13 +40,14 @@ export const { loadTodos, addTolist, markChecked, deleteFromList } =
   listSlice.actions;
 
 export const fetchTodos = async (dispatch) => {
-  console.log("on rentre dans la fonction fetch todos de list.slice");
   const url = "http://localhost:3000/api/musicItem";
   const response = await fetch(url, {
     method: "GET",
   }).then((response) => response.json());
-  console.log("response data ", response);
-  dispatch(loadTodos(response.data));
+  const todosList = response.data.map((todo) => {
+    return { id: todo._id, text: todo.text, done: todo.done };
+  });
+  dispatch(loadTodos(todosList));
 };
 
 export default listSlice.reducer;
