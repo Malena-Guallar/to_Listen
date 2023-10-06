@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Yeseva_One, Italiana, Quicksand } from "@next/font/google";
 import AddToList from "./Components/AddToList";
 import TodoItem from "./Components/TodoItem";
 import ItemFromCheckedList from "./Components/CheckedItem"
 import { useSelector, useDispatch } from "react-redux";
 import { markChecked, deleteFromList } from "../Redux/List.slice";
+import { store } from "../Redux/store";
+import { fetchTodos } from "../Redux/List.slice";
 
 
 const yeseva = Yeseva_One({
@@ -52,7 +54,13 @@ export const getServerSideProps = async () => {
 
 // Pb à régler -> les items marqués "checked" s'affichent toujours dans la première liste.
 
+
 export default function Home() {
+  
+  useEffect(() => {
+    console.log('je passe par le useEffect de Home')
+    store.dispatch(fetchTodos);
+  }, []);
 
   const todos = useSelector((state) => state.list.todos);
   const markedTodos = useSelector((state) => state.list.markedTodos);
@@ -63,7 +71,7 @@ export default function Home() {
     const response = await fetch(url, {
     method: "GET"})
     .then((response) => response.json())
-    console.log(response);
+    console.log('response from db ', response);
   };
   getFromDatabase();
 
